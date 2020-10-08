@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "920637701875",
+    "firebase_url": "https://asia-waters-demo.firebaseio.com",
+    "project_id": "asia-waters-demo",
+    "storage_bucket": "asia-waters-demo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920637701875:android:5878b6363f24ce186d4186",
+        "android_client_info": {
+          "package_name": "com.example.asia_water"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920637701875-3g8q4ohj691hcgnc6sbb1gqh4jej16c8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGKcatBDSuEgD2ftw2nCFWlwYFUJHiGcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920637701875-3g8q4ohj691hcgnc6sbb1gqh4jej16c8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
