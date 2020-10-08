@@ -8,6 +8,8 @@ class LoginInitial extends LoginState {
 }
 
 class Failure extends LoginState {
+  final bool isLoading = true;
+
   final String message;
 
   Failure({@required this.message});

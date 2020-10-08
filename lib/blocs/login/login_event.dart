@@ -4,8 +4,17 @@ part of 'login_bloc.dart';
 abstract class LoginEvent {}
 
 class LogIn extends LoginEvent {
-  final String username;
+  final String email;
   final String password;
 
-  LogIn({@required this.username, @required this.password});
+  LogIn({@required this.email, @required this.password});
 }
+
+class Register extends LoginEvent {
+  final String email;
+  final String password;
+
+  Register({@required this.email, @required this.password});
+}
+
+class StartVerification extends LoginEvent {}
