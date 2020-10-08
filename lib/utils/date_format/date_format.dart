@@ -14,5 +14,5 @@ String toStringDate(DateTime date) {
     12: 'Декабря',
   };
 
-  return '${DateTime.now().year} ${DateTime.now().day} ${monthInYears[DateTime.now().month]} ${DateTime.now().hour}:${DateTime.now().minute}';
+  return '${DateTime.now().year} ${DateTime.now().day} ${monthInYears[DateTime.now().month]} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}';
 }
