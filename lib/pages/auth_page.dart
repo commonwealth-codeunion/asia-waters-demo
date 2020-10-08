@@ -51,7 +51,9 @@ class AuthPage extends StatelessWidget {
                       _isLoading = state.isLoading;
                       return Navigator.of(context, rootNavigator: true)
                           .pushReplacementNamed('/home');
-                    } else if (state is Failure) {
+                    }
+                    if (state is Failure) {
+                      _isLoading = state.isLoading;
                       return showCupertinoDialog(
                         context: context,
                         builder: (context) {
@@ -67,12 +69,61 @@ class AuthPage extends StatelessWidget {
                           );
                         },
                       );
-                    } else if (state is Loading) {
-                      _isLoading = state.isLoading;
                     }
                   },
                   builder: (context, state) {
-                    return _buildLoginButton(_isLoading);
+                    if (state is Loading) {
+                      _isLoading = state.isLoading;
+                      return CupertinoActivityIndicator();
+                    } else {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: CupertinoButton.filled(
+                              child: Text(
+                                'Войти',
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 18,
+                              ),
+                              disabledColor: CupertinoColors.inactiveGray,
+                              onPressed: _isLoading
+                                  ? null
+                                  : () => _loginBloc.add(LogIn(
+                                        email: _usernameController.text,
+                                        password: _passwordController.text,
+                                      )),
+                            ),
+                          ),
+                          SizedBox(height: 25),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: CupertinoButton.filled(
+                              child: Text(
+                                'Зарегистрироваться',
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 18,
+                              ),
+                              disabledColor: CupertinoColors.inactiveGray,
+                              onPressed: _isLoading
+                                  ? null
+                                  : () => _loginBloc.add(Register(
+                                        email: _usernameController.text,
+                                        password: _passwordController.text,
+                                      )),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
                   },
                 )
               ],
@@ -80,28 +131,6 @@ class AuthPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Padding _buildLoginButton(bool isLoading) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: CupertinoButton.filled(
-          child: Text(
-            'Войти',
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-          padding: const EdgeInsets.symmetric(
-            vertical: 16,
-            horizontal: 18,
-          ),
-          disabledColor: CupertinoColors.inactiveGray,
-          onPressed: isLoading
-              ? null
-              : () async => _loginBloc.add(LogIn(
-                    username: _usernameController.text,
-                    password: _passwordController.text,
-                  ))),
     );
   }
 }
