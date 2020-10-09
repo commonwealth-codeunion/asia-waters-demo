@@ -1,11 +1,12 @@
 import 'dart:io';
 
+import 'package:asia_water/blocs/registry/registry_bloc.dart';
+import 'package:asia_water/models/registry.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'modals/select_points_type_modal.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegistryPage extends StatefulWidget {
   RegistryPage({Key key}) : super(key: key);
@@ -16,10 +17,13 @@ class RegistryPage extends StatefulWidget {
 
 class _RegistryPageState extends State<RegistryPage> {
   File _image;
+  RegistryBloc _registryBloc;
 
   final ImagePicker picker = ImagePicker();
   final TextEditingController _nameController = TextEditingController();
+  final List<String> _types = ["Супермаркет", "Магазин А", "Магазин В"];
   Position _position = Position();
+  int _pickedItem;
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
@@ -35,6 +39,8 @@ class _RegistryPageState extends State<RegistryPage> {
 
   @override
   Widget build(BuildContext context) {
+    _registryBloc = context.bloc<RegistryBloc>();
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Регистрация аудита'),
@@ -51,14 +57,33 @@ class _RegistryPageState extends State<RegistryPage> {
               placeholder: 'Название точки',
             ),
             CupertinoButton(
-              child: Text('Выбрать тип '),
+              child: Text(
+                _pickedItem == null ? "Выбрать тип" : _types[_pickedItem],
+              ),
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   isDismissible: true,
                   clipBehavior: Clip.none,
-                  builder: (context) => SelectPointsTypeModal(),
+                  builder: (context) => SizedBox(
+                    height: MediaQuery.of(context).size.height / 2,
+                    child: CupertinoPicker.builder(
+                      childCount: _types.length,
+                      itemExtent: 50,
+                      onSelectedItemChanged: (index) {
+                        setState(() {
+                          _pickedItem = index;
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        return Text(
+                          _types[index],
+                          textAlign: TextAlign.center,
+                        );
+                      },
+                    ),
+                  ),
                 );
               },
             ),
@@ -98,15 +123,41 @@ class _RegistryPageState extends State<RegistryPage> {
                 _position = await getCurrentPosition(
                   desiredAccuracy: LocationAccuracy.best,
                 );
-                print(_position);
                 return showCupertinoModalPopup(
                   context: context,
                   builder: (context) => CupertinoAlertDialog(
-                    title: Text('Точка зарегистрирована!'),
+                    title: Text('Вы уверены что хотите отпривть аудит?!'),
                     content: Column(
                       children: [
-                        Text(
-                          'Координаты: ${_position.latitude}\n${_position.longitude}',
+                        BlocConsumer<RegistryBloc, RegistryState>(
+                          listener: (context, state) {
+                            if (state is Failure) {
+                              return showCupertinoDialog(
+                                context: context,
+                                builder: (context) => CupertinoAlertDialog(
+                                  title: Text(state.message),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      child: Text("OK"),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                            if (state is Success) {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state is Loading) {
+                              return CupertinoActivityIndicator();
+                            }
+                            return Text(
+                              'Вместе с данными о торговой точке отправятся ваши геоданные',
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -125,8 +176,14 @@ class _RegistryPageState extends State<RegistryPage> {
                       CupertinoButton(
                         child: Text('Отправить'),
                         onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
+                          _registryBloc
+                            ..add(SendData(
+                              Registry(
+                                name: _nameController.text,
+                                type: _types[_pickedItem],
+                                position: _position,
+                              ),
+                            ));
                         },
                       ),
                     ],

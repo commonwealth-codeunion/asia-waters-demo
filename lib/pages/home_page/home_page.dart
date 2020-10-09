@@ -81,9 +81,7 @@ class HomePage extends StatelessWidget {
       ),
       child: SafeArea(
         child: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('registry_audits')
-                .snapshots(),
+            stream: RegistryService().getData(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.separated(
@@ -92,7 +90,7 @@ class HomePage extends StatelessWidget {
                     horizontal: 20,
                     vertical: 30,
                   ),
-                  itemCount: 1,
+                  itemCount: snapshot.data.documents.length,
                   itemBuilder: (context, index) => AuditCardWidget(
                     document: snapshot.data.documents[index].data(),
                   ),
