@@ -9,7 +9,7 @@ class AuthPage extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
 
   final EdgeInsets textFieldPadding = EdgeInsets.symmetric(
-    vertical: 24,
+    vertical: 14,
     horizontal: 16,
   );
 
@@ -26,10 +26,9 @@ class AuthPage extends StatelessWidget {
       ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
           child: Form(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 CupertinoTextField(
                   controller: _usernameController,
@@ -37,6 +36,7 @@ class AuthPage extends StatelessWidget {
                   placeholder: 'Логин',
                   padding: textFieldPadding,
                 ),
+                SizedBox(height: 15),
                 CupertinoTextField(
                   controller: _passwordController,
                   placeholder: 'Пароль',
@@ -77,49 +77,42 @@ class AuthPage extends StatelessWidget {
                       return CupertinoActivityIndicator();
                     } else {
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: CupertinoButton.filled(
-                              child: Text(
-                                'Войти',
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                                horizontal: 18,
-                              ),
-                              disabledColor: CupertinoColors.inactiveGray,
-                              onPressed: _isLoading
-                                  ? null
-                                  : () => _loginBloc.add(LogIn(
-                                        email: _usernameController.text,
-                                        password: _passwordController.text,
-                                      )),
+                          CupertinoButton.filled(
+                            child: Text(
+                              'Войти',
+                              style: TextStyle(fontWeight: FontWeight.w500),
                             ),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 18,
+                            ),
+                            disabledColor: CupertinoColors.inactiveGray,
+                            onPressed: _isLoading
+                                ? null
+                                : () => _loginBloc.add(LogIn(
+                                      email: _usernameController.text,
+                                      password: _passwordController.text,
+                                    )),
                           ),
                           SizedBox(height: 25),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: CupertinoButton.filled(
-                              child: Text(
-                                'Зарегистрироваться',
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                                horizontal: 18,
-                              ),
-                              disabledColor: CupertinoColors.inactiveGray,
-                              onPressed: _isLoading
-                                  ? null
-                                  : () => _loginBloc.add(Register(
-                                        email: _usernameController.text,
-                                        password: _passwordController.text,
-                                      )),
+                          CupertinoButton.filled(
+                            child: Text(
+                              'Зарегистрироваться',
+                              style: TextStyle(fontWeight: FontWeight.w500),
                             ),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 18,
+                            ),
+                            disabledColor: CupertinoColors.inactiveGray,
+                            onPressed: _isLoading
+                                ? null
+                                : () => _loginBloc.add(Register(
+                                      email: _usernameController.text,
+                                      password: _passwordController.text,
+                                    )),
                           ),
                         ],
                       );

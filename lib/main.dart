@@ -31,7 +31,7 @@ class App extends StatelessWidget {
           DefaultCupertinoLocalizations.delegate,
         ],
         theme: CupertinoThemeData(brightness: Brightness.light),
-        home: HomePage(),
+        home: AuthPage(),
         routes: {
           '/home': (context) => HomePage(),
           '/auth': (context) => AuthPage(),

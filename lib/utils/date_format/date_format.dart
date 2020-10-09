@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 String toStringDate(DateTime date) {
   const Map<int, String> monthInYears = {
     1: "Января",
@@ -14,5 +16,5 @@ String toStringDate(DateTime date) {
     12: 'Декабря',
   };
 
-  return '${DateTime.now().year} ${DateTime.now().day} ${monthInYears[DateTime.now().month]} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}';
+  return '${date.year} ${date.day} ${monthInYears[date.month]} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
 }

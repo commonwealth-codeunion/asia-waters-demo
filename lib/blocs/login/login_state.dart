@@ -8,7 +8,7 @@ class LoginInitial extends LoginState {
 }
 
 class Failure extends LoginState {
-  final bool isLoading = true;
+  final bool isLoading = false;
 
   final String message;
 
