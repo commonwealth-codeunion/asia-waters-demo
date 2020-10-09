@@ -15,9 +15,11 @@ class Failure extends LoginState {
   Failure({@required this.message});
 }
 
-class LoggedIn extends LoginState {
+class Success extends LoginState {
   final bool isLoading = false;
 }
+
+class LogedOut extends Success {}
 
 class Loading extends LoginState {
   final bool isLoading = true;

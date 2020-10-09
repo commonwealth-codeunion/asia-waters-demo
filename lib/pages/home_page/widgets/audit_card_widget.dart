@@ -1,6 +1,7 @@
 import 'package:asia_water/utils/date_format/date_format.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AuditCardWidget extends StatelessWidget {
   const AuditCardWidget({
@@ -12,8 +13,8 @@ class AuditCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
+    return CupertinoButton(
+      onPressed: () {
         print('Карточка реестра нажата.');
       },
       child: Container(
@@ -33,7 +34,8 @@ class AuditCardWidget extends StatelessWidget {
               ),
             ),
             Text(
-              toStringDate(DateTime.fromMillisecondsSinceEpoch(document['date'].seconds * 1000)),
+              toStringDate(DateTime.fromMillisecondsSinceEpoch(
+                  document['date'].seconds * 1000)),
               style: TextStyle(
                 fontSize: 16,
                 color: CupertinoColors.inactiveGray,

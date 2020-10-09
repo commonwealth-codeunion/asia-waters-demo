@@ -47,7 +47,7 @@ class AuthPage extends StatelessWidget {
                 SizedBox(height: 32),
                 BlocConsumer<LoginBloc, LoginState>(
                   listener: (context, state) {
-                    if (state is LoggedIn) {
+                    if (state is Success) {
                       _isLoading = state.isLoading;
                       return Navigator.of(context, rootNavigator: true)
                           .pushReplacementNamed('/home');

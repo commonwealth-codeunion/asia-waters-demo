@@ -17,4 +17,6 @@ class Register extends LoginEvent {
   Register({@required this.email, @required this.password});
 }
 
+class LogOut extends LoginEvent {}
+
 class StartVerification extends LoginEvent {}
