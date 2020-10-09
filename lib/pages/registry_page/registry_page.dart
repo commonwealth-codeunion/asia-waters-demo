@@ -63,8 +63,34 @@ class _RegistryPageState extends State<RegistryPage> {
               },
             ),
             CupertinoButton(
-              child: Text('Загрузить картинку'),
-              onPressed: () => getImage(),
+              child: Text(_image == null ? 'Загрузить фото' : 'Фото выбрано'),
+              onPressed: () {
+                if (_image == null) {
+                  return getImage();
+                } else {
+                  return showCupertinoDialog(
+                    context: context,
+                    builder: (context) {
+                      return CupertinoAlertDialog(
+                        title: Text('Вы хотите загрузить новое фото?'),
+                        actions: [
+                          CupertinoDialogAction(
+                            child: Text('Ок'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              return getImage();
+                            },
+                          ),
+                          CupertinoDialogAction(
+                            child: Text('Нет'),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
             ),
             CupertinoButton.filled(
               child: Text('Отправить'),
