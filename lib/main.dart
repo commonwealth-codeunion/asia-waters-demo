@@ -1,4 +1,5 @@
 import 'package:asia_water/blocs/login/login_bloc.dart';
+import 'package:asia_water/blocs/registry/registry_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,9 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => LoginBloc()..add(StartVerification()),
+        ),
+        BlocProvider(
+          create: (context) => RegistryBloc(),
         ),
       ],
       child: CupertinoApp(

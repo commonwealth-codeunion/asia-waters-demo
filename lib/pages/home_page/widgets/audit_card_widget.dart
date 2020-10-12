@@ -17,32 +17,25 @@ class AuditCardWidget extends StatelessWidget {
       onPressed: () {
         print('Карточка реестра нажата.');
       },
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          color: CupertinoColors.lightBackgroundGray,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '${document['name']}',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+      color: CupertinoColors.activeBlue,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            '${document['name']}',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-            Text(
-              toStringDate(DateTime.fromMillisecondsSinceEpoch(
-                  document['date'].seconds * 1000)),
-              style: TextStyle(
-                fontSize: 16,
-                color: CupertinoColors.inactiveGray,
-              ),
+          ),
+          Text(
+            toStringDate(DateTime.fromMillisecondsSinceEpoch(
+                document['date'].seconds * 1000)),
+            style: TextStyle(
+              fontSize: 16,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
